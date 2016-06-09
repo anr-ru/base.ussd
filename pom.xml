@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ru.anr</groupId>
+        <artifactId>base.platform.parent</artifactId>
+        <version>0.5-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>base.ussd</artifactId>
+
+
+    <name>Base Ussd</name>
+    <description>Base project for ussd</description>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:ssh://@github.com/anr-ru/base.ussd.git</connection>
+        <url>https://github.com/anr-ru/base.ussd/</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>alex</id>
+            <name>Alexey Romanchuk</name>
+            <email>alexey.p.romanchuk@gmail.com</email>
+            <timezone>5</timezone>
+        </developer>
+        <developer>
+            <id>alexsss</id>
+            <name>Alexey Melkov</name>
+            <email>alexsss25@yandex.ru</email>
+            <timezone>5</timezone>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>ru.anr</groupId>
+            <artifactId>base.facade</artifactId>
+        </dependency>
+    </dependencies>
+</project>
