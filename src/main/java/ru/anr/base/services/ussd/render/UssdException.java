@@ -42,6 +42,20 @@ public class UssdException extends ApplicationException {
     }
 
     /**
+     * Constructor
+     * 
+     * @param msg
+     *            A message for a user
+     * @param pin
+     *            true, if query for a pin
+     */
+    public UssdException(String msg) {
+
+        super(msg);
+        this.pin = false;
+    }
+
+    /**
      * Constructor in traces of exception
      * 
      * @param msg
