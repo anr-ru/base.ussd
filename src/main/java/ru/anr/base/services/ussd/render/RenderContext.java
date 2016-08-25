@@ -39,6 +39,11 @@ public class RenderContext extends BaseParent {
     public static final String SESSION_ID = "sessionId";
 
     /**
+     * sessionId
+     */
+    public static final String SESSION_ID_FOR_USSD_SEND = String.format("%s={%s}", SESSION_ID, SESSION_ID);
+
+    /**
      * The page
      */
     private final Page page;
