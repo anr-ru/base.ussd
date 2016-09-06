@@ -173,7 +173,7 @@ public class RenderContext extends BaseParent {
      *            Additional parameters
      * @return A new link object
      */
-    public Link addLink(String ref, String key, String text, Object... params) {
+    private Link addLink(String ref, String key, String text, Object... params) {
 
         String s = getSession();
         Map<String, Object> map = toMap();
