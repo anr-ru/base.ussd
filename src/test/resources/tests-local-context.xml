@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+    <context:annotation-config />
+
+    <beans>
+ 
+         <bean id = "UssdConfig" class = "ru.anr.base.ussd.UssdConfig"
+            p:hostName="127.0.0.1" p:port="7070" p:schema="http"
+            p:baseUrl="base"
+            p:login="none"
+            p:password="none"
+            p:service="service" />
+            
+        <bean id = "UssdRestClient" class = "ru.anr.base.ussd.UssdRestClient">
+            <constructor-arg  name="ussdConfig" ref="UssdConfig"/>
+        </bean>
+
+        <!-- JMS -->
+        <bean id="jmsTemplate" class="ru.anr.base.tests.TestJmsOperations" />
+        <bean id="externalQueue" class="ru.anr.base.tests.TestDestination">
+            <constructor-arg value="ExternalQueue" />
+        </bean>
+        <bean id="passwordQueue" class="ru.anr.base.tests.TestDestination">
+            <constructor-arg value="PasswordQueue" />
+        </bean>
+        <bean id="testQueue" class="ru.anr.base.tests.TestDestination">
+            <constructor-arg value="TestQueue" />
+        </bean>
+        <bean id="eventQueue" class="ru.anr.base.tests.TestDestination">
+            <constructor-arg value="EventQueue" />
+        </bean>
+    </beans>
+
+</beans>

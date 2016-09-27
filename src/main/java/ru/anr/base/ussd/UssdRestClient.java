@@ -20,6 +20,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsOperations;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -213,6 +217,16 @@ public class UssdRestClient extends BaseSpringParent {
 
         StringBuilder s = new StringBuilder(baseUrl);
         s.append("?subscriber={subscriber}&service={service}");
+
+        if (url != null && !url.contains("sessionId")) {
+            Authentication token = SecurityContextHolder.getContext().getAuthentication();
+            if (token instanceof OAuth2Authentication) {
+                OAuth2AuthenticationDetails details =
+                        (OAuth2AuthenticationDetails) ((OAuth2Authentication) token).getDetails();
+                s.append("sessionId={sessionId}");
+                all.add(details.getTokenValue());
+            }
+        }
 
         if (StringUtils.hasLength(url)) {
             s.append('&');

@@ -47,5 +47,17 @@
             <groupId>ru.anr</groupId>
             <artifactId>base.facade</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ru.anr</groupId>
+            <artifactId>base.tests</artifactId>
+        </dependency>      
+        
+        <!-- TESTS and runtime -->
+        <dependency>
+            <groupId>ru.anr</groupId>
+            <artifactId>base.facade</artifactId>
+            <scope>test</scope>
+            <classifier>tests</classifier>
+        </dependency>  
     </dependencies>
 </project>
