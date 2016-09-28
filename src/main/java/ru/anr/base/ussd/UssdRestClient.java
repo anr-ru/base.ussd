@@ -211,9 +211,6 @@ public class UssdRestClient extends BaseSpringParent {
     public String send(String subscriber, String url, Object... params) {
 
         List<Object> all = list(subscriber, service);
-        if (params != null && params.length > 0) {
-            all.addAll(list(params));
-        }
 
         StringBuilder s = new StringBuilder(baseUrl);
         s.append("?subscriber={subscriber}&service={service}");
@@ -223,9 +220,13 @@ public class UssdRestClient extends BaseSpringParent {
             if (token instanceof OAuth2Authentication) {
                 OAuth2AuthenticationDetails details =
                         (OAuth2AuthenticationDetails) ((OAuth2Authentication) token).getDetails();
-                s.append("sessionId={sessionId}");
                 all.add(details.getTokenValue());
+                s.append("&sessionId={sessionId}");
             }
+        }
+
+        if (params != null && params.length > 0) {
+            all.addAll(list(params));
         }
 
         if (StringUtils.hasLength(url)) {
