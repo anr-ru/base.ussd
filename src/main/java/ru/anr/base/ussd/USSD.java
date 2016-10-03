@@ -31,7 +31,15 @@ public @interface USSD {
 
     /**
      * true if need return blank page (customer not receive ussd on phone)
+     * 
      * @return true or false
      */
     boolean returnBlank() default false;
+
+    /**
+     * Check subscriber equal phone in token
+     * 
+     * @return true or false
+     */
+    boolean checkSubscriberInToken() default true;
 }
