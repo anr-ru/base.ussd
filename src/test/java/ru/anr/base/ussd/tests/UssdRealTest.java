@@ -1,13 +1,15 @@
 /**
  * 
  */
-package ru.anr.base.ussd;
+package ru.anr.base.ussd.tests;
 
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
+
+import ru.anr.base.ussd.UssdRestClient;
 
 /**
  * Description ...

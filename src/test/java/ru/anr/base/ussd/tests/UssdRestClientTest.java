@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ru.anr.base.ussd;
+package ru.anr.base.ussd.tests;
 
 import javax.jms.Destination;
 
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.Message;
 
 import ru.anr.base.tests.JmsTests;
+import ru.anr.base.ussd.UssdRestClient;
 
 /**
  * Description ...

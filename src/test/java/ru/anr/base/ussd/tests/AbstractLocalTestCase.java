@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ru.anr.base.ussd;
+package ru.anr.base.ussd.tests;
 
 import org.junit.Ignore;
 import org.springframework.test.context.ActiveProfiles;
