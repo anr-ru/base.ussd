@@ -255,7 +255,7 @@ public class UssdRestClient extends BaseSpringParent {
         logger.info("USSD sending details: to {}, url: {}, params: {}", subscriber, url, params);
 
         if (isProdMode()) {
-            if (!waitCondition(30, 5000, true, args -> {
+            if (!waitCondition(30, 2000, true, args -> {
                 String res = waitSend(url, params);
                 map.put("result", res);
                 return !HttpStatus.BAD_REQUEST.name().equals(res);
