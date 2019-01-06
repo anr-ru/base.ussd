@@ -5,14 +5,15 @@
     <parent>
         <groupId>ru.anr</groupId>
         <artifactId>base.platform.parent</artifactId>
-        <version>0.5-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
+    <version>1.0.0-SNAPSHOT</version>
     <artifactId>base.ussd</artifactId>
 
 
-    <name>Base Ussd</name>
-    <description>Base project for ussd</description>
+    <name>Base USSD</name>
+    <description>Basic utilities for writing USSD application based on miniapps.pro services</description>
 
     <licenses>
         <license>
@@ -84,16 +85,19 @@
         <dependency>
             <groupId>ru.anr</groupId>
             <artifactId>base.facade</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>ru.anr</groupId>
             <artifactId>base.tests</artifactId>
+            <version>1.0.0</version>
         </dependency>      
         
         <!-- TESTS and runtime -->
         <dependency>
             <groupId>ru.anr</groupId>
             <artifactId>base.facade</artifactId>
+            <version>1.0.0</version>
             <scope>test</scope>
             <classifier>tests</classifier>
         </dependency>  
