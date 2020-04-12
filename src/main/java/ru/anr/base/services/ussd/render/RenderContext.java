@@ -16,6 +16,7 @@
 
 package ru.anr.base.services.ussd.render;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -189,7 +190,7 @@ public class RenderContext extends BaseParent {
     private Link addLink(String ref, String key, String text, Object... params) {
 
         String s = getSession();
-        Map<String, Object> map = toMap();
+        LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 
         if (s != null) {
             map.put(SESSION_ID, s);
@@ -199,8 +200,8 @@ public class RenderContext extends BaseParent {
 
         if (!CollectionUtils.isEmpty(map)) {
 
-            List<NameValuePair> list = list(map.entrySet().stream().map(//
-                    e -> new BasicNameValuePair(e.getKey(), nullSafe(e.getValue()))));
+            List<NameValuePair> list = list(map.entrySet()
+                    .stream().map(e -> new BasicNameValuePair(e.getKey(), nullSafe(e.getValue()))));
 
             url += "?" + URLEncodedUtils.format(list, "utf8");
         }
