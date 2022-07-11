@@ -1,12 +1,12 @@
 /*
- * Copyright 2014 the original author or authors.
- * 
+ * Copyright 2014-2022 the original author or authors.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -16,32 +16,21 @@
 
 package ru.anr.base.ussd.models;
 
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
 import ru.anr.base.BaseParent;
 
+import javax.xml.bind.annotation.*;
+import java.util.List;
+
 /**
- * 
  * Main page element
- *
  *
  * @author Aleksey Melkov
  * @created Dec 20, 2014
- *
  */
 @XmlRootElement(name = "page")
-@XmlType(propOrder = { "title", "divs", "navigations", "attributes" })
+@XmlType(propOrder = {"title", "divs", "navigations", "attributes"})
 public class Page extends AbstractMarkupObject {
 
-    /**
-     * Serial
-     */
     private static final long serialVersionUID = -3357264832992775158L;
 
     /**
@@ -71,7 +60,7 @@ public class Page extends AbstractMarkupObject {
 
     /**
      * Add Navigation element
-     * 
+     *
      * @return Added navigation element
      */
     public Navigation createNavi() {
@@ -85,7 +74,7 @@ public class Page extends AbstractMarkupObject {
 
     /**
      * Create embedded element {@link Div}
-     * 
+     *
      * @return Created element
      */
     public Div createDiv() {
@@ -100,10 +89,8 @@ public class Page extends AbstractMarkupObject {
     /**
      * Add attribute
      *
-     * @param name
-     *            name
-     * @param value
-     *            value
+     * @param name  name
+     * @param value value
      * @return Added attribute
      */
     public Attribute addAttr(String name, String value) {
@@ -124,10 +111,8 @@ public class Page extends AbstractMarkupObject {
     /**
      * Create title element
      *
-     * @param p
-     *            protocol
-     * @param value
-     *            title text
+     * @param p     protocol
+     * @param value title text
      * @return Object title
      */
     public Title createTitle(Protocols p, String value) {
@@ -142,8 +127,7 @@ public class Page extends AbstractMarkupObject {
     /**
      * Find attribute by name
      *
-     * @param name
-     *            name
+     * @param name name
      * @return attribute value
      */
     public String findAttribute(String name) {
@@ -157,10 +141,8 @@ public class Page extends AbstractMarkupObject {
     /**
      * Find attribute by name
      *
-     * @param name
-     *            name
-     * @param listAttrs
-     *            list of attributes
+     * @param name      name
+     * @param listAttrs list of attributes
      * @return attribute value
      */
     private Attribute findAttribute(String name, List<Attribute> listAttrs) {
@@ -168,11 +150,8 @@ public class Page extends AbstractMarkupObject {
         Attribute attr = null;
 
         if (listAttrs != null && !listAttrs.isEmpty()) {
-
             for (Object o : listAttrs) {
-
                 Attribute a = (Attribute) o;
-
                 if (name.equals(a.getName())) {
                     attr = a;
                     break;
@@ -182,9 +161,9 @@ public class Page extends AbstractMarkupObject {
         return attr;
     }
 
-    // /////////////////////////////////////////////////////////////////////////
-    // /// getters/setters
-    // /////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    ///// getters/setters
+    ///////////////////////////////////////////////////////////////////////////
 
     /**
      * @return the version
@@ -233,8 +212,7 @@ public class Page extends AbstractMarkupObject {
     }
 
     /**
-     * @param navigations
-     *            the navigations to set
+     * @param navigations the navigations to set
      */
     public void setNavigations(List<Navigation> navigations) {
 
@@ -242,8 +220,7 @@ public class Page extends AbstractMarkupObject {
     }
 
     /**
-     * @param version
-     *            the version to set
+     * @param version the version to set
      */
     public void setVersion(String version) {
 
@@ -251,8 +228,7 @@ public class Page extends AbstractMarkupObject {
     }
 
     /**
-     * @param title
-     *            the title to set
+     * @param title the title to set
      */
     public void setTitle(Title title) {
 
@@ -260,8 +236,7 @@ public class Page extends AbstractMarkupObject {
     }
 
     /**
-     * @param divs
-     *            the divs to set
+     * @param divs the divs to set
      */
     public void setDivs(List<Div> divs) {
 
@@ -269,8 +244,7 @@ public class Page extends AbstractMarkupObject {
     }
 
     /**
-     * @param attributes
-     *            the attributes to set
+     * @param attributes the attributes to set
      */
     public void setAttributes(List<Attribute> attributes) {
 

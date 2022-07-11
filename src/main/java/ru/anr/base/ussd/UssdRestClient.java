@@ -1,12 +1,12 @@
 /*
- * Copyright 2014 the original author or authors.
- * 
+ * Copyright 2014-2022 the original author or authors.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,12 +15,6 @@
  */
 
 package ru.anr.base.ussd;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.jms.Destination;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,24 +34,22 @@ import org.springframework.security.oauth2.provider.authentication.OAuth2Authent
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
-
 import ru.anr.base.BaseSpringParent;
 import ru.anr.base.facade.web.api.RestClient;
 
+import javax.jms.Destination;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
- * USSD Client implementation.
- *
+ * A USSD Client implementation.
  *
  * @author Aleksey Melkov
  * @created Jan 2, 2015
- *
  */
-
 public class UssdRestClient extends BaseSpringParent {
 
-    /**
-     * The logger
-     */
     private static final Logger logger = LoggerFactory.getLogger(UssdRestClient.class);
 
     /**
@@ -111,13 +103,10 @@ public class UssdRestClient extends BaseSpringParent {
 
         /**
          * Default constructor
-         * 
-         * @param schema
-         *            The schema
-         * 
+         *
+         * @param schema The schema
          */
         protected UssdRest(String schema) {
-
             super(schema);
         }
 
@@ -126,20 +115,17 @@ public class UssdRestClient extends BaseSpringParent {
          */
         @Override
         protected HttpHeaders applyHeaders() {
-
             HttpHeaders hh = super.applyHeaders();
             hh.add("X-Authentication-Name", login);
             hh.add("X-Authentication-Password", password);
             return hh;
         }
-
     }
 
     /**
      * Default constructor
-     * 
-     * @param ussdConfig
-     *            Ussd Config
+     *
+     * @param ussdConfig Ussd Config
      */
     public UssdRestClient(UssdConfig ussdConfig) {
 
@@ -163,15 +149,11 @@ public class UssdRestClient extends BaseSpringParent {
     /**
      * Sends a USSD command with extracted sessionId and pageId (common used
      * parameters)
-     * 
-     * @param subscriber
-     *            The phone number
-     * @param sessionId
-     *            The sessionId
-     * @param pageId
-     *            The pageId
-     * @param paramPairs
-     *            A list of additional parameters
+     *
+     * @param subscriber The phone number
+     * @param sessionId  The sessionId
+     * @param pageId     The pageId
+     * @param paramPairs A list of additional parameters
      * @return true, if sending has been successful
      */
     public String sendDetailed(String subscriber, Object sessionId, String pageId, Object... paramPairs) {
@@ -192,33 +174,29 @@ public class UssdRestClient extends BaseSpringParent {
         Map<String, Object> params = toMap(paramPairs);
         params.forEach((k, v) -> {
             ends(url);
-            url.append(k + "={value_" + k + "}");
+            url.append(k).append("={value_").append(k).append("}");
             objects.add(v);
         });
-        return send(subscriber, url.toString(), objects.toArray(new Object[objects.size()]));
+        return send(subscriber, url.toString(), objects.toArray(new Object[0]));
     }
 
     /**
      * Adds the '&' symbol to the specified StringBuilder
-     * 
-     * @param s
-     *            The String Builder
-     * @return The String builder with the added value
+     *
+     * @param s The String Builder
      */
-    private StringBuilder ends(StringBuilder s) {
-
-        return (s.length() == 0) ? s : s.append('&');
+    private void ends(StringBuilder s) {
+        if (s.length() != 0) {
+            s.append('&');
+        }
     }
 
     /**
-     * Sends USSD menu initiated by our server
-     * 
-     * @param subscriber
-     *            A user's mobile number
-     * @param url
-     *            Additional parameters as url part
-     * @param params
-     *            Parameters values
+     * Sends a USSD menu initiated by our server
+     *
+     * @param subscriber A user's mobile number
+     * @param url        Additional parameters as url part
+     * @param params     Parameters values
      * @return true, if sending has been successful
      */
     public String send(String subscriber, String url, Object... params) {
@@ -231,9 +209,9 @@ public class UssdRestClient extends BaseSpringParent {
         if (url != null && !url.contains("sessionId")) {
             Authentication token = SecurityContextHolder.getContext().getAuthentication();
             if (token instanceof OAuth2Authentication) {
-                OAuth2AuthenticationDetails details =
-                        (OAuth2AuthenticationDetails) ((OAuth2Authentication) token).getDetails();
+                OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) token.getDetails();
                 all.add(details.getTokenValue());
+                // Assume the session ID is the token
                 s.append("&sessionId={sessionId}");
             }
         }
@@ -252,18 +230,15 @@ public class UssdRestClient extends BaseSpringParent {
     /**
      * Performs sending in the case of production configuration. If it's not the
      * production mode, it just writes a message to a log.
-     * 
-     * @param subscriber
-     *            The phone
-     * @param url
-     *            the url in the query
-     * @param params
-     *            Parameters of the query
+     *
+     * @param subscriber The phone
+     * @param url        the url in the query
+     * @param params     Parameters of the query
      * @return Resulted state (Queued in case of success)
      */
     private String internalSend(String subscriber, String url, List<Object> params) {
 
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         String result = null;
         logger.info("USSD sending details: to {}, url: {}, params: {}", subscriber, url, params);
 
@@ -271,20 +246,18 @@ public class UssdRestClient extends BaseSpringParent {
             if (!waitCondition("USSD Sending", 30, 2000, true, args -> {
                 String res = waitSend(url, params);
                 map.put("result", res);
+                // Sometimes, the service may return BAD REQUEST withing certain time
                 return !HttpStatus.BAD_REQUEST.name().equals(res);
             })) {
                 result = map.get("result");
             }
-
         } else {
             result = "Queued";
             if (testQueue != null) {
-
                 Map<String, Object> hh = toMap("PHONE", subscriber, "URL", url);
                 Message<String> msg = new GenericMessage<String>(params.toString(), hh);
 
                 jms.convertAndSend(testQueue, msg);
-
                 logger.debug("Sent a message: {}", msg);
             }
         }
@@ -293,18 +266,16 @@ public class UssdRestClient extends BaseSpringParent {
 
     /**
      * Performs for wait sending.
-     * 
-     * @param url
-     *            the url in the query
-     * @param params
-     *            Parameters of the query
+     *
+     * @param url    The url in the query
+     * @param params Parameters of the query
      * @return Resulted state (Queued in case of success)
      */
     private String waitSend(String url, List<Object> params) {
 
         String result = null;
         try {
-            ResponseEntity<String> r = client.get(url, params.toArray(new Object[params.size()]));
+            ResponseEntity<String> r = client.get(url, params.toArray(new Object[0]));
             result = r.getBody();
         } catch (HttpClientErrorException ex) {
             if (HttpStatus.BAD_REQUEST.equals(ex.getStatusCode())) {
@@ -319,13 +290,12 @@ public class UssdRestClient extends BaseSpringParent {
         return result;
     }
 
-    // /////////////////////////////////////////////////////////////////////////
-    // /// getters/setters
-    // /////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    ///// getters/setters
+    ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * @param login
-     *            the login to set
+     * @param login the login to set
      */
     public void setLogin(String login) {
 
@@ -333,8 +303,7 @@ public class UssdRestClient extends BaseSpringParent {
     }
 
     /**
-     * @param password
-     *            the password to set
+     * @param password the password to set
      */
     public void setPassword(String password) {
 
@@ -342,8 +311,7 @@ public class UssdRestClient extends BaseSpringParent {
     }
 
     /**
-     * @param service
-     *            the service to set
+     * @param service the service to set
      */
     public void setService(String service) {
 
@@ -351,8 +319,7 @@ public class UssdRestClient extends BaseSpringParent {
     }
 
     /**
-     * @param baseUrl
-     *            the baseUrl to set
+     * @param baseUrl the baseUrl to set
      */
     public void setBaseUrl(String baseUrl) {
 
@@ -363,13 +330,11 @@ public class UssdRestClient extends BaseSpringParent {
      * @return the client
      */
     public UssdRest getClient() {
-
         return client;
     }
 
     /**
-     * @param ussdConfig
-     *            the ussdConfig to set
+     * @param ussdConfig the ussdConfig to set
      */
     public void setUssdConfig(UssdConfig ussdConfig) {
 

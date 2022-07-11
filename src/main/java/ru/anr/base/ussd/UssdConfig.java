@@ -1,12 +1,12 @@
 /*
- * Copyright 2014 the original author or authors.
- * 
+ * Copyright 2014-2022 the original author or authors.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -19,12 +19,10 @@ package ru.anr.base.ussd;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * USSD general configuration.
- *
+ * The USSD general configuration.
  *
  * @author Alexey Romanchuk
  * @created Jun 9, 2015
- *
  */
 @Configuration
 public class UssdConfig {
@@ -64,9 +62,9 @@ public class UssdConfig {
      */
     private String schema = "https";
 
-    // /////////////////////////////////////////////////////////////////////////
-    // /// getters/setters
-    // /////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    ///// getters/setters
+    ///////////////////////////////////////////////////////////////////////////
 
     /**
      * @return the login
@@ -125,8 +123,7 @@ public class UssdConfig {
     }
 
     /**
-     * @param login
-     *            the login to set
+     * @param login the login to set
      */
     public void setLogin(String login) {
 
@@ -134,8 +131,7 @@ public class UssdConfig {
     }
 
     /**
-     * @param password
-     *            the password to set
+     * @param password the password to set
      */
     public void setPassword(String password) {
 
@@ -143,8 +139,7 @@ public class UssdConfig {
     }
 
     /**
-     * @param service
-     *            the service to set
+     * @param service the service to set
      */
     public void setService(String service) {
 
@@ -152,8 +147,7 @@ public class UssdConfig {
     }
 
     /**
-     * @param baseUrl
-     *            the baseUrl to set
+     * @param baseUrl the baseUrl to set
      */
     public void setBaseUrl(String baseUrl) {
 
@@ -161,8 +155,7 @@ public class UssdConfig {
     }
 
     /**
-     * @param hostName
-     *            the hostName to set
+     * @param hostName the hostName to set
      */
     public void setHostName(String hostName) {
 
@@ -170,8 +163,7 @@ public class UssdConfig {
     }
 
     /**
-     * @param port
-     *            the port to set
+     * @param port the port to set
      */
     public void setPort(int port) {
 
@@ -179,8 +171,7 @@ public class UssdConfig {
     }
 
     /**
-     * @param schema
-     *            the schema to set
+     * @param schema the schema to set
      */
     public void setSchema(String schema) {
 

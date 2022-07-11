@@ -1,12 +1,12 @@
 /*
- * Copyright 2014 the original author or authors.
- * 
+ * Copyright 2014-2022 the original author or authors.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -16,29 +16,21 @@
 
 package ru.anr.base.ussd.models;
 
-import java.util.List;
+import org.springframework.util.Assert;
+import ru.anr.base.BaseParent;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-
-import org.springframework.util.Assert;
-
-import ru.anr.base.BaseParent;
+import java.util.List;
 
 /**
- * 
- * Div Element
- *
+ * The 'div' Element.
  *
  * @author Aleksey Melkov
  * @created Dec 25, 2014
- *
  */
 public class Div extends AbstractMarkupObject {
 
-    /**
-     * Serial ID
-     */
     private static final long serialVersionUID = 2642560050178183113L;
 
     /**
@@ -66,7 +58,6 @@ public class Div extends AbstractMarkupObject {
      * Setting param - delivery by SMS
      */
     public void setSMS() {
-
         setType("sms");
     }
 
@@ -80,7 +71,7 @@ public class Div extends AbstractMarkupObject {
 
     /**
      * Create a nested div
-     * 
+     *
      * @return Created element {@link Div}
      */
     public Div createDiv() {
@@ -94,10 +85,8 @@ public class Div extends AbstractMarkupObject {
 
     /**
      * Create a nested div
-     * 
-     * @param text
-     *            text value
-     * 
+     *
+     * @param text text value
      * @return Created element {@link Div}
      */
     public Div createDiv(String text) {
@@ -112,15 +101,11 @@ public class Div extends AbstractMarkupObject {
 
     /**
      * Create input
-     * 
-     * @param name
-     *            Input control name
-     * @param title
-     *            title - prompt for input
-     * @param navigation
-     *            The ID of the navigation section, the link of which will be
-     *            transferred to the entered value.
-     * 
+     *
+     * @param name       Input control name
+     * @param title      title - prompt for input
+     * @param navigation The ID of the navigation section, the link of which will be
+     *                   transferred to the entered value.
      * @return Created element {@link Div}
      */
     public Input createInput(String name, String title, Navigation navigation) {
@@ -140,15 +125,11 @@ public class Div extends AbstractMarkupObject {
 
     /**
      * Create input
-     * 
-     * @param name
-     *            Input control name
-     * @param title
-     *            title - prompt for input
-     * @param navigationId
-     *            The ID of the navigation section, the link of which will be
-     *            transferred to the entered value.
-     * 
+     *
+     * @param name         Input control name
+     * @param title        title - prompt for input
+     * @param navigationId The ID of the navigation section, the link of which will be
+     *                     transferred to the entered value.
      * @return Created element {@link Div}
      */
     public Input createInput(String name, String title, String navigationId) {
@@ -166,15 +147,11 @@ public class Div extends AbstractMarkupObject {
 
     /**
      * Create Select
-     * 
-     * @param name
-     *            Select control name
-     * @param title
-     *            title - prompt for input
-     * @param navigation
-     *            The ID of the navigation section, the link of which will be
-     *            transferred to the entered value.
-     * 
+     *
+     * @param name       Select control name
+     * @param title      title - prompt for input
+     * @param navigation The ID of the navigation section, the link of which will be
+     *                   transferred to the entered value.
      * @return Created element {@link Div}
      */
     public Select createSelect(String name, String title, Navigation navigation) {
@@ -194,18 +171,16 @@ public class Div extends AbstractMarkupObject {
 
     /**
      * Checking that the navigation unit identifier
-     * 
-     * @param navigation
-     *            Block with navigation
+     *
+     * @param navigation Block with navigation
      */
     private void assertNavigation(Navigation navigation) {
-
         Assert.notNull(navigation.getId(), "Navigation should have an ID");
     }
 
-    // /////////////////////////////////////////////////////////////////////////
-    // // getters/setters
-    // /////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    //// getters/setters
+    ///////////////////////////////////////////////////////////////////////////
 
     /**
      * @return the type
@@ -244,8 +219,7 @@ public class Div extends AbstractMarkupObject {
     }
 
     /**
-     * @param type
-     *            the type to set
+     * @param type the type to set
      */
     public void setType(String type) {
 
@@ -253,8 +227,7 @@ public class Div extends AbstractMarkupObject {
     }
 
     /**
-     * @param divs
-     *            the divs to set
+     * @param divs the divs to set
      */
     public void setDivs(List<Div> divs) {
 
@@ -262,8 +235,7 @@ public class Div extends AbstractMarkupObject {
     }
 
     /**
-     * @param inputs
-     *            the inputs to set
+     * @param inputs the inputs to set
      */
     public void setInputs(List<Input> inputs) {
 
@@ -271,8 +243,7 @@ public class Div extends AbstractMarkupObject {
     }
 
     /**
-     * @param selects
-     *            the selects to set
+     * @param selects the selects to set
      */
     public void setSelects(List<Select> selects) {
 

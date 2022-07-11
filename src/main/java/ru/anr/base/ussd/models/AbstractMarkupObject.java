@@ -1,12 +1,12 @@
 /*
- * Copyright 2014 the original author or authors.
- * 
+ * Copyright 2014-2022 the original author or authors.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,42 +15,28 @@
  */
 package ru.anr.base.ussd.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.util.StringUtils;
+import ru.anr.base.BaseParent;
+import ru.anr.base.domain.api.models.RequestModel;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlValue;
-
-import org.springframework.util.StringUtils;
-
-import ru.anr.base.BaseParent;
-import ru.anr.base.domain.api.models.RequestModel;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 
- * AbstractMarkupObject class
- * <p>
- * Base object for ussd
+ * The base markup object.
  *
  * @author Aleksey Melkov
  * @created Jan 2, 2015
  */
 public abstract class AbstractMarkupObject extends RequestModel {
 
-    /**
-     * Serial ID
-     */
     private static final long serialVersionUID = 2455327797834790851L;
 
-    /**
-     * Value
-     */
     private String value;
 
-    /**
-     * Id
-     */
     private String id;
 
     /**
@@ -59,14 +45,11 @@ public abstract class AbstractMarkupObject extends RequestModel {
     private String protocol;
 
     /**
-     * 
-     * Add additional (or main) protocol
-     * 
-     * @param p
-     *            protocol
+     * Adds additional (or main) protocol
+     *
+     * @param p protocol
      */
     public void addProtocol(Protocols p) {
-
         if (StringUtils.hasLength(protocol)) {
             protocol = protocol.concat(" " + p.name());
         } else {
@@ -75,44 +58,22 @@ public abstract class AbstractMarkupObject extends RequestModel {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Integer getCode() {
-
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setCode(Integer code) {
-
-        // Do nothing
-    }
-
-    /**
-     * 
-     * @param p
-     *            the protocol to set
+     * @param p the protocol to set
      */
     @XmlTransient
     public void setProtocol(Protocols p) {
-
         setProtocol(p.name());
     }
 
-    // /////////////////////////////////////////////////////////////////////////
-    // /// getters/setters
-    // /////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    ///// getters/setters
+    ///////////////////////////////////////////////////////////////////////////
 
     /**
      * @return the value
      */
     @XmlValue
     public String getValue() {
-
         return value;
     }
 
@@ -121,7 +82,6 @@ public abstract class AbstractMarkupObject extends RequestModel {
      */
     @XmlAttribute(name = "id")
     public String getId() {
-
         return id;
     }
 
@@ -135,8 +95,7 @@ public abstract class AbstractMarkupObject extends RequestModel {
     }
 
     /**
-     * @param id
-     *            the id to set
+     * @param id the id to set
      */
     public void setId(String id) {
 
@@ -144,8 +103,7 @@ public abstract class AbstractMarkupObject extends RequestModel {
     }
 
     /**
-     * @param protocol
-     *            the protocol to set
+     * @param protocol the protocol to set
      */
     private void setProtocol(String protocol) {
 
@@ -153,8 +111,7 @@ public abstract class AbstractMarkupObject extends RequestModel {
     }
 
     /**
-     * @param value
-     *            the value to set
+     * @param value the value to set
      */
     public void setValue(String value) {
 
@@ -163,16 +120,14 @@ public abstract class AbstractMarkupObject extends RequestModel {
 
     /**
      * Find elements by class
-     * 
-     * @param items
-     *            - list items
-     * @param clazz
-     *            class
+     *
+     * @param items - list items
+     * @param clazz class
      * @return list elements
      */
     protected List<Object> findOfClass(List<Object> items, Class<?> clazz) {
 
-        List<Object> rs = new ArrayList<Object>();
+        List<Object> rs = new ArrayList<>();
         List<Object> list = BaseParent.list(items);
 
         for (Object o : list) {

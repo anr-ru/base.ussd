@@ -1,12 +1,12 @@
 /*
- * Copyright 2014 the original author or authors.
- * 
+ * Copyright 2014-2022 the original author or authors.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -16,26 +16,19 @@
 
 package ru.anr.base.ussd.models;
 
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlElement;
-
 import ru.anr.base.BaseParent;
 
+import javax.xml.bind.annotation.XmlElement;
+import java.util.List;
+
 /**
- * 
- * Navigation element
- *
+ * Navigation Element
  *
  * @author Aleksey Melkov
  * @created Dec 24, 2014
- *
  */
 public class Navigation extends AbstractMarkupObject {
 
-    /**
-     * Serial ID
-     */
     private static final long serialVersionUID = 2944454040102412837L;
 
     /**
@@ -45,11 +38,9 @@ public class Navigation extends AbstractMarkupObject {
 
     /**
      * Add Link Element
-     * 
-     * @param pageId
-     *            Code page for link
-     * @param accesskey
-     *            Code keys to perform
+     *
+     * @param pageId    Code page for link
+     * @param accesskey Code keys to perform
      * @return Object - Link
      */
     public Link addLink(String pageId, String accesskey) {
@@ -63,9 +54,9 @@ public class Navigation extends AbstractMarkupObject {
         return link;
     }
 
-    // /////////////////////////////////////////////////////////////////////////
-    // /// getters/setters
-    // /////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    ///// getters/setters
+    ///////////////////////////////////////////////////////////////////////////
 
     /**
      * @return the links
@@ -77,12 +68,10 @@ public class Navigation extends AbstractMarkupObject {
     }
 
     /**
-     * @param links
-     *            the links to set
+     * @param links the links to set
      */
     public void setLinks(List<Link> links) {
 
         this.links = links;
     }
-
 }

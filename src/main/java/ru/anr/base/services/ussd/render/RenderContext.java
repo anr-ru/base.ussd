@@ -1,61 +1,41 @@
 /*
- * Copyright 2014 the original author or authors.
- * 
+ * Copyright 2014-2022 the original author or authors.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package ru.anr.base.services.ussd.render;
-
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
-
 import ru.anr.base.BaseParent;
-import ru.anr.base.ussd.models.Div;
-import ru.anr.base.ussd.models.Input;
-import ru.anr.base.ussd.models.InputTypes;
-import ru.anr.base.ussd.models.Link;
-import ru.anr.base.ussd.models.Navigation;
-import ru.anr.base.ussd.models.Page;
-import ru.anr.base.ussd.models.Protocols;
-import ru.anr.base.ussd.models.Title;
+import ru.anr.base.ussd.models.*;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A render object to build USSD menus.
  *
- *
  * @author Alexey Romanchuk
  * @created Jun 19, 2015
- *
  */
-
 public class RenderContext extends BaseParent {
 
-    /**
-     * sessionId
-     */
     public static final String SESSION_ID = "sessionId";
-
-    /**
-     * sessionId
-     */
-    public static final String SESSION_ID_FOR_USSD_SEND = String.format("%s={%s}", SESSION_ID, SESSION_ID);
 
     /**
      * The page
@@ -69,83 +49,72 @@ public class RenderContext extends BaseParent {
 
     /**
      * Construction of the render
-     * 
-     * @param page
-     *            The page
+     *
+     * @param page The page
      */
     public RenderContext(Page page) {
-
         super();
         this.page = page;
     }
 
     /**
      * Returns the ID
-     * 
+     *
      * @return The id of the page
      */
     public String id() {
-
         return page.getId();
     }
 
     /**
      * Returns the title of the page
-     * 
+     *
      * @return The title
      */
     public String getTitle() {
-
         Title t = page.getTitle();
-        return (t == null) ? "" : t.getValue();
+        return nullSafeOp(t.getValue()).orElse("");
     }
 
     /**
      * Sets the title for the page
-     * 
-     * @param title
-     *            The title
+     *
+     * @param title The title
      */
     public void setTitle(String title) {
-
         Title t = page.getTitle();
         if (t == null) {
-            t = page.createTitle(Protocols.ussd, title);
+            page.createTitle(Protocols.ussd, title);
         } else {
             t.setValue(title);
         }
     }
 
     /**
-     * Applies for a new session
+     * Set the session ID
      *
-     * @param session
-     *            The session identifier
+     * @param session The session identifier
      */
     public void setSession(String session) {
-
         page.addAttr(SESSION_ID, session);
     }
 
     /**
-     * get a session
+     * Returns the current session ID
      *
      * @return session The session identifier
      */
     public String getSession() {
-
         return page.findAttribute(SESSION_ID);
     }
 
     /**
      * Builds the plain text div
      *
-     * @param text
-     *            The text
+     * @param text The text
      * @return A newly created DIV (to set additional parameters)
      */
     public Div plainText(String text) {
-
         Div div = page.createDiv();
         div.setValue(text);
         return div;
@@ -153,38 +122,27 @@ public class RenderContext extends BaseParent {
 
     /**
      * Creates a new link with {@link Navigation} section
-     * 
-     * @param id
-     *            The identifier of {@link Navigation}
-     * @param ref
-     *            The link url
-     * @param key
-     *            The key to press
-     * @param text
-     *            The title text
-     * @param params
-     *            Additional parameters added to the url
+     *
+     * @param id     The identifier of {@link Navigation}
+     * @param ref    The link url
+     * @param key    The key to press
+     * @param text   The title text
+     * @param params Additional parameters added to the url
      * @return A new link object
      */
     public Link link(String id, String ref, String key, String text, Object... params) {
-
         navi = page.createNavi();
         navi.setId(id);
-
         return addLink(ref, key, text, params);
     }
 
     /**
      * Adds a link to the current (last) {@link Navigation}
-     * 
-     * @param ref
-     *            The reference (url)
-     * @param key
-     *            The key to press
-     * @param text
-     *            The title text
-     * @param params
-     *            Additional parameters
+     *
+     * @param ref    The reference (url)
+     * @param key    The key to press
+     * @param text   The title text
+     * @param params Additional parameters
      * @return A new link object
      */
     private Link addLink(String ref, String key, String text, Object... params) {
@@ -199,10 +157,10 @@ public class RenderContext extends BaseParent {
         String url = ref;
 
         if (!CollectionUtils.isEmpty(map)) {
-
-            List<NameValuePair> list = list(map.entrySet()
-                    .stream().map(e -> new BasicNameValuePair(e.getKey(), nullSafe(e.getValue()))));
-
+            List<NameValuePair> list = map.entrySet()
+                    .stream()
+                    .map(e -> new BasicNameValuePair(e.getKey(), nullSafe(e.getValue())))
+                    .collect(Collectors.toList());
             url += "?" + URLEncodedUtils.format(list, "utf8");
         }
 
@@ -215,11 +173,9 @@ public class RenderContext extends BaseParent {
 
     /**
      * Creates an input linked with the current {@link Navigation}
-     * 
-     * @param name
-     *            The name of field
-     * @param title
-     *            The title (label)
+     *
+     * @param name  The name of field
+     * @param title The title (label)
      * @return A new object
      */
     public Input input(String name, String title) {
@@ -234,22 +190,16 @@ public class RenderContext extends BaseParent {
 
     /**
      * Creates an input linked with the specified by id navigation
-     * 
-     * @param name
-     *            The name of field
-     * @param title
-     *            The title (label)
-     * @param navId
-     *            The identifier of the navigation
+     *
+     * @param name  The name of field
+     * @param title The title (label)
+     * @param navId The identifier of the navigation
      * @return A new object
      */
     public Input input(String name, String title, String navId) {
-
         Div div = page.createDiv();
-
         Input in = div.createInput(name, title, navId);
         in.setType(InputTypes.text);
         return in;
     }
-
 }

@@ -1,26 +1,20 @@
-/**
- * 
- */
 package ru.anr.base.ussd.tests;
 
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
-
 import ru.anr.base.ussd.UssdRestClient;
 
 /**
  * Description ...
  *
- *
  * @author Aleksey Melkov
  * @created Jan 2, 2015
- *
  */
 @ActiveProfiles("production")
-@Ignore
+@Disabled
 public class UssdRealTest extends AbstractLocalTestCase {
 
     /**
@@ -34,9 +28,9 @@ public class UssdRealTest extends AbstractLocalTestCase {
      */
     @Test
     public void testSendUSSDText() {
-
-        Assert.assertNotNull(ussdRestClient.send("79122437136", "sessionId={sessionId}&pageId={id}&text={otp}",
-                "notNeed", "sendUSSDText", "7890"));
+        Assertions.assertNotNull(
+                ussdRestClient.send("79122437136", "sessionId={sessionId}&pageId={id}&text={otp}",
+                        "notNeed", "sendUSSDText", "7890"));
     }
 
     /**
@@ -45,8 +39,8 @@ public class UssdRealTest extends AbstractLocalTestCase {
     @Test
     public void testSendSMSText() {
 
-        Assert.assertNotNull(ussdRestClient.send("79122437136", "sessionId={sessionId}&pageId={id}&text={otp}",
-                "notNeed", "sendSMSText", "The password: 7890"));
+        Assertions.assertNotNull(
+                ussdRestClient.send("79122437136", "sessionId={sessionId}&pageId={id}&text={otp}",
+                        "notNeed", "sendSMSText", "The password: 7890"));
     }
-
 }
