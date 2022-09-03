@@ -1,7 +1,7 @@
 package ru.anr.base.services.ussd.render;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 import ru.anr.base.services.serializer.XMLSerializerImpl;
 import ru.anr.base.ussd.models.Page;
 import ru.anr.base.ussd.tests.AbstractLocalTestCase;
@@ -26,7 +26,7 @@ public class RenderContextTest extends AbstractLocalTestCase {
         XMLSerializerImpl xml = new XMLSerializerImpl();
 
         String strXml = xml.toStr(root);
-        Assertions.assertEquals("<?xml version='1.0' encoding='UTF-8'?>" +
+        Assert.assertEquals("<?xml version='1.0' encoding='UTF-8'?>" +
                 "<page version=\"2.0\">" +
                 "<title protocol=\"ussd\">Title</title><div><input name=\"in\" title=\"Enter it\" type=\"text\" navigationId=\"id\"/></div>" +
                 "<navigation id=\"id\">" +

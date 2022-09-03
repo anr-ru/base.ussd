@@ -42,7 +42,7 @@ public class USSDMessage extends BaseParent {
                 .map(String::trim)
                 .collect(Collectors.toList());
 
-        this.url = nullSafeOp((String) m.getHeaders().get("URL")).orElse("");
+        this.url = nullSafe("", (String) m.getHeaders().get("URL"));
 
         UriTemplate t = new UriTemplate(url);
         t.expand(params.toArray(new Object[]{})); // to check matching

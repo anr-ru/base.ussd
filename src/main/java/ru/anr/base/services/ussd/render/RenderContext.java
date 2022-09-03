@@ -73,7 +73,7 @@ public class RenderContext extends BaseParent {
      */
     public String getTitle() {
         Title t = page.getTitle();
-        return nullSafeOp(t.getValue()).orElse("");
+        return nullSafe("", t.getValue());
     }
 
     /**

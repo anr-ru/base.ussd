@@ -1,6 +1,6 @@
 package ru.anr.base.ussd.tests;
 
-import org.junit.jupiter.api.Disabled;
+import org.junit.Ignore;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import ru.anr.base.tests.BaseTestCase;
@@ -13,7 +13,7 @@ import ru.anr.base.tests.BaseTestCase;
  */
 @ActiveProfiles("test")
 @ContextConfiguration(locations = {"classpath:/tests-local-context.xml"}, inheritLocations = false)
-@Disabled
+@Ignore
 public class AbstractLocalTestCase extends BaseTestCase {
 
 }

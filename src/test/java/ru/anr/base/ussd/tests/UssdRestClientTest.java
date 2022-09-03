@@ -1,7 +1,7 @@
 package ru.anr.base.ussd.tests;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.Message;
@@ -45,7 +45,7 @@ public class UssdRestClientTest extends AbstractLocalTestCase {
     private String[] extract() {
         @SuppressWarnings("unchecked")
         Message<String> m = (Message<String>) jms.receiveAndConvert(queue);
-        Assertions.assertNotNull(m);
+        Assert.assertNotNull(m);
         return new String[]{nullSafe(m.getHeaders().get("URL")), m.getPayload()};
     }
 
@@ -57,21 +57,21 @@ public class UssdRestClientTest extends AbstractLocalTestCase {
 
         jms.clean(queue);
 
-        Assertions.assertNotNull(ussdRestClient.send("79122437136", null));
+        Assert.assertNotNull(ussdRestClient.send("79122437136", null));
 
         String[] values = extract();
-        Assertions.assertEquals("base?subscriber={subscriber}&service={service}", values[0]);
-        Assertions.assertEquals("[79122437136, service]", values[1]);
+        Assert.assertEquals("base?subscriber={subscriber}&service={service}", values[0]);
+        Assert.assertEquals("[79122437136, service]", values[1]);
 
         jms.clean(queue);
         // with parameters
-        Assertions.assertNotNull(ussdRestClient.send("79122437136", "sessionId={sessionId}&pageId={id}&text={otp}",
+        Assert.assertNotNull(ussdRestClient.send("79122437136", "sessionId={sessionId}&pageId={id}&text={otp}",
                 "notNeed", "sendUSSDText", "7890"));
 
         values = extract();
-        Assertions.assertEquals("base?subscriber={subscriber}&service={service}&sessionId={sessionId}&pageId={id}&text={otp}",
+        Assert.assertEquals("base?subscriber={subscriber}&service={service}&sessionId={sessionId}&pageId={id}&text={otp}",
                 values[0]);
-        Assertions.assertEquals("[79122437136, service, notNeed, sendUSSDText, 7890]", values[1]);
+        Assert.assertEquals("[79122437136, service, notNeed, sendUSSDText, 7890]", values[1]);
     }
 
     /**
@@ -81,14 +81,14 @@ public class UssdRestClientTest extends AbstractLocalTestCase {
     public void testSendDetailed() {
 
         jms.clean(queue);
-        Assertions.assertNotNull(
+        Assert.assertNotNull(
                 ussdRestClient.sendDetailed("79122437136", "12345", "webx", "p1", "v1", "p2", 23, "p3",
                         d("1.23")));
 
         String[] values = extract();
-        Assertions.assertEquals("base?subscriber={subscriber}&service={service}&sessionId={sessionId}&pageId={id}&"
+        Assert.assertEquals("base?subscriber={subscriber}&service={service}&sessionId={sessionId}&pageId={id}&"
                 + "p1={value_p1}&p2={value_p2}&p3={value_p3}", values[0]);
-        Assertions.assertEquals("[79122437136, service, 12345, webx, v1, 23, 1.23]", values[1]);
+        Assert.assertEquals("[79122437136, service, 12345, webx, v1, 23, 1.23]", values[1]);
     }
 
     /**
@@ -99,35 +99,35 @@ public class UssdRestClientTest extends AbstractLocalTestCase {
 
         // No parameters
         jms.clean(queue);
-        Assertions.assertNotNull(ussdRestClient.sendDetailed("79122437136", "12345", "webx"));
+        Assert.assertNotNull(ussdRestClient.sendDetailed("79122437136", "12345", "webx"));
 
         String[] values = extract();
-        Assertions.assertEquals("base?subscriber={subscriber}&service={service}&sessionId={sessionId}&pageId={id}",
+        Assert.assertEquals("base?subscriber={subscriber}&service={service}&sessionId={sessionId}&pageId={id}",
                 values[0]);
-        Assertions.assertEquals("[79122437136, service, 12345, webx]", values[1]);
+        Assert.assertEquals("[79122437136, service, 12345, webx]", values[1]);
 
         // The page is empty
         jms.clean(queue);
-        Assertions.assertNotNull(ussdRestClient.sendDetailed("79122437136", "12345", null));
+        Assert.assertNotNull(ussdRestClient.sendDetailed("79122437136", "12345", null));
 
         values = extract();
-        Assertions.assertEquals("base?subscriber={subscriber}&service={service}&sessionId={sessionId}", values[0]);
-        Assertions.assertEquals("[79122437136, service, 12345]", values[1]);
+        Assert.assertEquals("base?subscriber={subscriber}&service={service}&sessionId={sessionId}", values[0]);
+        Assert.assertEquals("[79122437136, service, 12345]", values[1]);
 
         // No session, but the page exists
         jms.clean(queue);
-        Assertions.assertNotNull(ussdRestClient.sendDetailed("79122437136", null, "webx"));
+        Assert.assertNotNull(ussdRestClient.sendDetailed("79122437136", null, "webx"));
 
         values = extract();
-        Assertions.assertEquals("base?subscriber={subscriber}&service={service}&pageId={id}", values[0]);
-        Assertions.assertEquals("[79122437136, service, webx]", values[1]);
+        Assert.assertEquals("base?subscriber={subscriber}&service={service}&pageId={id}", values[0]);
+        Assert.assertEquals("[79122437136, service, webx]", values[1]);
 
         // No session, no page
         jms.clean(queue);
-        Assertions.assertNotNull(ussdRestClient.sendDetailed("79122437136", null, null));
+        Assert.assertNotNull(ussdRestClient.sendDetailed("79122437136", null, null));
 
         values = extract();
-        Assertions.assertEquals("base?subscriber={subscriber}&service={service}", values[0]);
-        Assertions.assertEquals("[79122437136, service]", values[1]);
+        Assert.assertEquals("base?subscriber={subscriber}&service={service}", values[0]);
+        Assert.assertEquals("[79122437136, service]", values[1]);
     }
 }
